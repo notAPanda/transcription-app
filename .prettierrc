@@ -1,0 +1,13 @@
+{
+    "htmlWhitespaceSensitivity": "ignore",
+    "endOfLine": "lf",
+    "proseWrap": "preserve",
+    "quoteProps": "as-needed",
+    "bracketSpacing": true,
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "arrowParens": "always"
+  }
+  
