@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('extension');
             $table->string('s3_path')->nullable();
-            $table->json('transcript')->nullable();
-            $table->mediumText('raw_transcript')->nullable();
             $table->integer('duration');
             $table->timestamps();
         });
