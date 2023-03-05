@@ -14,7 +14,7 @@ class FileController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Files', [
+        return Inertia::render('Files/Index', [
             'files' => auth()->user()->files()->get(),
         ]);
     }
@@ -53,7 +53,9 @@ class FileController extends Controller
      */
     public function show(File $file)
     {
-        //
+        return Inertia::render('Files/Show', [
+            'file' => $file->load('transcriptions'),
+        ]);
     }
 
     /**

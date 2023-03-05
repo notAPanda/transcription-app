@@ -1,18 +1,24 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\TranscriptionController;
+
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/', [\App\Http\Controllers\DashboardController::class, 'welcome']);
+Route::get('/', [DashboardController::class, 'welcome']);
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/transcriptions', [\App\Http\Controllers\DashboardController::class, 'transcriptions'])->name('transcriptions');
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    Route::get('/files', [\App\Http\Controllers\FileController::class, 'index'])->name('files.index');
-    Route::post('/files', [\App\Http\Controllers\FileController::class, 'store'])->name('files.store');
+    Route::get('/transcriptions', [TranscriptionController::class, 'index'])->name('transcriptions.index');
+
+    Route::get('/files', [FileController::class, 'index'])->name('files.index');
+    Route::get('/files/{file}', [FileController::class, 'show'])->name('files.show');
+    Route::post('/files', [FileController::class, 'store'])->name('files.store');
 });

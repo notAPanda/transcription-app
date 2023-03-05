@@ -22,4 +22,9 @@ class File extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function transcriptions()
+    {
+        return $this->hasMany(Transcription::class);
+    }
 }
