@@ -21,7 +21,7 @@ const submit = (event) => {
         })
         .then(uploadFileToS3)
         .then((response) => {
-            showUploadModal = false
+            showUploadModal.value = false
         })
 }
 </script>

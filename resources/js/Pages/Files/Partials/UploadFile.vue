@@ -2,10 +2,12 @@
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import DialogModal from '@/Components/DialogModal.vue';
 import { ref } from 'vue'
-import { useForm } from '@inertiajs/vue3'
+import { useForm, router } from '@inertiajs/vue3'
+import _ from 'lodash'
 
 const fileUpload = ref(null)
 const showUploadModal = ref(false)
+const progress = ref(0)
 
 const form = useForm({
     name: null,
@@ -35,10 +37,11 @@ const handleFileInput = (event) => {
 }
 
 const uploadFileToS3 = (url) => {
-    axios.put(url, fileUpload.value, {
+    return axios.put(url, fileUpload.value, {
         onUploadProgress: (progressEvent) => {
-            console.log(progressEvent.loaded)
+            progress.value = Math.round((progressEvent.loaded * 100) / progressEvent.total)
         },
+        
         headers: {
             'Content-Type': fileUpload.value.type,
         },
@@ -57,7 +60,10 @@ const submit = (event) => {
         })
         .then(uploadFileToS3)
         .then((response) => {
-            showUploadModal = false
+            showUploadModal.value = false
+        })
+        .then(() => {
+            router.reload({only: ['files']})
         })
 }
 </script>
@@ -83,9 +89,9 @@ const submit = (event) => {
                         <input type="file"
                             class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
                             @input="handleFileInput" />
-                        <progress class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700" v-if="form.progress"
-                            :value="form.progress.percentage" max="100">
-                            {{ form.progress.percentage }}%
+                        <progress class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700" v-if="progress"
+                            :value="progress" max="100">
+                            {{ progress }}%
                         </progress>
                     </div>
                 </form>
