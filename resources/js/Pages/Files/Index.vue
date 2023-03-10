@@ -3,6 +3,7 @@ import AppLayout from '@/Layouts/AppLayout.vue'
 import Dropdown from '@/Components/Dropdown.vue'
 import DropdownLink from '@/Components/DropdownLink.vue'
 import UploadFile from '@/Pages/Files/Partials/UploadFile.vue'
+import TranscribeForm from '@/Pages/Files/Partials/TranscribeForm.vue'
 
 import { Link } from '@inertiajs/vue3'
 import _ from 'lodash'
@@ -52,7 +53,9 @@ const transcribe = () => {
                                         <td class="text-right">
                                             {{ Math.floor(file.duration / 60) }}min {{ file.duration % 60 }}sec
                                         </td>
-                                        <td class="text-right">
+                                        <td class="flex justify-end">
+                                            <TranscribeForm></TranscribeForm>
+
                                             <Dropdown>
                                                 <template #trigger>
                                                     <span class="inline-flex rounded-md">

@@ -58,7 +58,6 @@ const submit = (event) => {
         .then(uploadFileToS3)
         .then((response) => {
             showUploadModal = false
-            console.log('upload completed', response)
         })
 }
 </script>
@@ -93,7 +92,7 @@ const submit = (event) => {
             </template>
 
             <template #footer>
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing" @click.prevent="submit">
                     Upload
                 </PrimaryButton>
             </template>
