@@ -5,18 +5,15 @@ import DropdownLink from '@/Components/DropdownLink.vue'
 import UploadFile from '@/Pages/Files/Partials/UploadFile.vue'
 import TranscribeForm from '@/Pages/Files/Partials/TranscribeForm.vue'
 
-import { Link } from '@inertiajs/vue3'
+import { Link, router } from '@inertiajs/vue3'
 import _ from 'lodash'
 
 defineProps({
     files: Array,
 })
 
-const remove = () => {
-    console.log('delete')
-}
-const transcribe = () => {
-    console.log('transcribe')
+const remove = (id) => {
+    router.delete(route("files.destroy", id))
 }
 </script>
 
@@ -30,7 +27,7 @@ const transcribe = () => {
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                <div class="bg-white shadow-xl sm:rounded-lg">
                     <div class="p-6 lg:p-8">
                         <UploadFile class="mb-4"></UploadFile>
 
@@ -71,12 +68,7 @@ const transcribe = () => {
                                                     </span>
                                                 </template>
                                                 <template #content>
-                                                    <DropdownLink as="a" href="#" @click.prevent="
-                                                        transcribe
-                                                    ">
-                                                        Transcribe
-                                                    </DropdownLink>
-                                                    <DropdownLink as="a" href="#" @click.prevent="remove">
+                                                    <DropdownLink as="a" href="#" @click.prevent="remove(file.id)">
                                                         Delete
                                                     </DropdownLink>
                                                 </template>

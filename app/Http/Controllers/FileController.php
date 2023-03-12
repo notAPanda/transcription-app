@@ -79,6 +79,12 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        //
+        if ($file->s3_path) {
+            FileService::removeS3Object($file->s3_path);
+        }
+        
+        $file->delete();
+
+        return to_route('files.index');
     }
 }

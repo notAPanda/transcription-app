@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\File;
 use Aws\S3\S3Client;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class FileService
@@ -38,5 +39,13 @@ class FileService
             'upload_url' => $upload_url,
             'download_url' => $key,
         ];
+    }
+
+    public static function removeS3Object($path)
+    {
+        if (Storage::disk('s3')->exists($path)) {
+            Storage::disk('s3')->delete($path);
+        }
+        return true;
     }
 }
