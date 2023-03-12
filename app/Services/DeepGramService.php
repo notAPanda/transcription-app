@@ -20,10 +20,15 @@ class FileService
 
         $data = array_merge($defaults, $options);
 
-        $response = Http::post('https://api.deepgram.com/v1/listen', $data)->headers([
-            'Authorization' => "Token {$token}",
-            'content-type' => 'application/json',
-        ]);
+        // $response = Http::post('https://api.deepgram.com/v1/listen', $data)->headers([
+        //     'Authorization' => "Token {$token}",
+        //     'content-type' => 'application/json',
+        // ]);
+
+        $response = Http::withToken($token)
+            ->acceptJson()
+            ->post('https://api.deepgram.com/v1/listen', $data)
+            ->json();
 
         return $response;
     }

@@ -17,6 +17,9 @@ Route::middleware([
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/transcriptions', [TranscriptionController::class, 'index'])->name('transcriptions.index');
+    Route::get('/transcriptions/{transcription}', [TranscriptionController::class, 'show'])->name('transcriptions.show');
+    Route::post('/transcriptions', [TranscriptionController::class, 'store'])->name('transcriptions.store');
+    Route::delete('/transcriptions/{transcription}', [TranscriptionController::class, 'destroy'])->name('transcriptions.destroy');
 
     Route::get('/files', [FileController::class, 'index'])->name('files.index');
     Route::get('/files/{file}', [FileController::class, 'show'])->name('files.show');

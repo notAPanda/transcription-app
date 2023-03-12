@@ -12,7 +12,7 @@ defineProps({
     files: Array,
 })
 
-const remove = (id) => {
+const destroy = (id) => {
     router.delete(route("files.destroy", id))
 }
 </script>
@@ -51,7 +51,7 @@ const remove = (id) => {
                                             {{ Math.floor(file.duration / 60) }}min {{ file.duration % 60 }}sec
                                         </td>
                                         <td class="flex justify-end">
-                                            <TranscribeForm></TranscribeForm>
+                                            <TranscribeForm :file_id="file.id"></TranscribeForm>
 
                                             <Dropdown>
                                                 <template #trigger>
@@ -68,7 +68,7 @@ const remove = (id) => {
                                                     </span>
                                                 </template>
                                                 <template #content>
-                                                    <DropdownLink as="a" href="#" @click.prevent="remove(file.id)">
+                                                    <DropdownLink as="a" href="#" @click.prevent="destroy(file.id)">
                                                         Delete
                                                     </DropdownLink>
                                                 </template>

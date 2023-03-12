@@ -13,7 +13,9 @@ class TranscriptionController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Transcriptions/Index');
+        return Inertia::render('Transcriptions/Index', [
+            'transcriptions' => auth()->user()->transcriptions()->with('file')->get(),
+        ]);
     }
 
     /**
@@ -29,7 +31,23 @@ class TranscriptionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'file_id' => 'required|integer',
+            'language' => 'required|string',
+        ]);
+
+        $settings = array_filter($validated, function($key) {
+            return !in_array($key, ['file_id']);
+        }, ARRAY_FILTER_USE_KEY);
+
+        Transcription::create([
+            'user_id' => $request->user()->id,
+            'file_id' => $validated['file_id'],
+            'settings' => $settings,
+            'status' => 0,
+        ]);
+
+        return to_route('transcriptions.index');
     }
 
     /**
@@ -37,7 +55,10 @@ class TranscriptionController extends Controller
      */
     public function show(Transcription $transcription)
     {
-        //
+        return Inertia::render('Transcriptions/Show', [
+            'transcription' => $transcription,
+        ]);
+
     }
 
     /**

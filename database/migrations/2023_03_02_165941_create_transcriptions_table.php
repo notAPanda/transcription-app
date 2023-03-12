@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('transcriptions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('file_id')->constrained();
+            $table->smallInteger('status');
+            $table->foreignId('file_id')->nullable();
+            $table->foreignId('user_id')->constrained();
             $table->json('settings')->nullable();
-            $table->longText('deepgram_response');
+            $table->longText('deepgram_response')->nullable();
             $table->timestamps();
         });
     }

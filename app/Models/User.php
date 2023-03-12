@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(File::class);
     }
+
+    public function transcriptions()
+    {
+        return $this->hasMany(Transcription::class);
+    }
 }
